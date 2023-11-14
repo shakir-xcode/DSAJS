@@ -83,43 +83,36 @@ class Bst {
 		return this.bfsRecursive(queue, result)
 	}
 
-	preOrder (node) {
-		let data = [];
+	preOrder (node, list = []) {
 
-		function traverse (node) {
-			if (!node) return;
-			data.push(node.data);
-			traverse(node.left);
-			traverse(node.right);
-		}
-		traverse(this.root);
-		return data;
+		list.push(node.data);
+		if (node.left)
+			this.preOrder(node.left, list);
+		if (node.right)
+			this.preOrder(node.right, list);
+	
+		return list;
 	}
 
-	inOrder (node) {
-		let data = [];
 
-		function traverse (node) {
-			if (!node) return;
-			traverse(node.left);
-			data.push(node.data);
-			traverse(node.right);
-		}
-		traverse(this.root);
-		return data;
+	inOrder (node, list = []) {
+		if(node.left)
+			this.inOrder(node.left, list)
+		list.push(node.data);
+		if(node.right)
+			this.inOrder(node.right, list)
+		return list;
+
 	}
 
-	postOrder (node) {
-		let data = [];
-
-		function traverse (node) {
-			if (!node) return;
-			traverse(node.left);
-			traverse(node.right);
-			data.push(node.data);
-		}
-		traverse(this.root);
-		return data;
+	postOrder (node, list=[]) {
+		if (node.left) 
+			this.postOrder(node.left, list);
+		if (node.right)
+			this.postOrder(node.right, list);
+		list.push(node.data);
+		
+		return list;
 	}
 
 		
@@ -136,9 +129,5 @@ t1.insert(3);
 t1.insert(8);
 t1.insert(20);
 
-//console.log('LookUp : ',t1.lookup(44));
-
-t1.bfsIter();
-console.log(t1.bfsRecursive([t1.root]));
 
 //console.log(t1.postOrder(t1.preOrder()))
