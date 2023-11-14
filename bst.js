@@ -51,7 +51,7 @@ class Bst {
 		}
 	} 
 
-	bfs () {
+	bfsIter () {
 		if (!this.root) return;
 		let item;
 		let queue = [];
@@ -60,7 +60,7 @@ class Bst {
 
 		while (queue.length !==0 ) {
 			item = queue.shift()
-			visited.push(item);
+			visited.push(item.data);
 			if (item.left) 
 				queue.push(item.left);
 			if (item.right)
@@ -69,7 +69,19 @@ class Bst {
 		}
 
 		console.log(visited);
-	}	
+	}
+
+	bfsRecursive(queue, result=[]) {
+		if (!this.root) return;
+		if (!queue.length) return result;
+		
+		let item = queue.shift();
+		result.push(item.data);
+		if (item.left) queue.push(item.left);
+		if (item.right) queue.push(item.right);
+		
+		return this.bfsRecursive(queue, result)
+	}
 
 	preOrder (node) {
 		let data = [];
@@ -117,17 +129,16 @@ class Bst {
 
 const t1 = new Bst();
 
-
-console.log(t1.bfs());
-console.log(t1.insert(10));
-console.log(t1.insert(6));
-console.log(t1.insert(15));
-console.log(t1.insert(3));
-console.log(t1.insert(8));
-console.log(t1.insert(20));
+t1.insert(10);
+t1.insert(6);
+t1.insert(15);
+t1.insert(3);
+t1.insert(8);
+t1.insert(20);
 
 //console.log('LookUp : ',t1.lookup(44));
 
-//console.log(t1.bfs());
+t1.bfsIter();
+console.log(t1.bfsRecursive([t1.root]));
 
-console.log(t1.postOrder(t1.preOrder()))
+//console.log(t1.postOrder(t1.preOrder()))
