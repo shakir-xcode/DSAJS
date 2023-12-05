@@ -51,7 +51,7 @@ class Bst {
 		}
 	} 
 
-	bfs () {
+	bfsIter () {
 		if (!this.root) return;
 		let item;
 		let queue = [];
@@ -60,7 +60,7 @@ class Bst {
 
 		while (queue.length !==0 ) {
 			item = queue.shift()
-			visited.push(item);
+			visited.push(item.data);
 			if (item.left) 
 				queue.push(item.left);
 			if (item.right)
@@ -69,45 +69,50 @@ class Bst {
 		}
 
 		console.log(visited);
-	}	
-
-	preOrder (node) {
-		let data = [];
-
-		function traverse (node) {
-			if (!node) return;
-			data.push(node.data);
-			traverse(node.left);
-			traverse(node.right);
-		}
-		traverse(this.root);
-		return data;
 	}
 
-	inOrder (node) {
-		let data = [];
-
-		function traverse (node) {
-			if (!node) return;
-			traverse(node.left);
-			data.push(node.data);
-			traverse(node.right);
-		}
-		traverse(this.root);
-		return data;
+	bfsRecursive(queue, result=[]) {
+		if (!this.root) return;
+		if (!queue.length) return result;
+		
+		let item = queue.shift();
+		result.push(item.data);
+		if (item.left) queue.push(item.left);
+		if (item.right) queue.push(item.right);
+		
+		return this.bfsRecursive(queue, result)
 	}
 
-	postOrder (node) {
-		let data = [];
+	preOrder (node, list = []) {
 
-		function traverse (node) {
-			if (!node) return;
-			traverse(node.left);
-			traverse(node.right);
-			data.push(node.data);
-		}
-		traverse(this.root);
-		return data;
+		list.push(node.data);
+		if (node.left)
+			this.preOrder(node.left, list);
+		if (node.right)
+			this.preOrder(node.right, list);
+	
+		return list;
+	}
+
+
+	inOrder (node, list = []) {
+		if(node.left)
+			this.inOrder(node.left, list)
+		list.push(node.data);
+		if(node.right)
+			this.inOrder(node.right, list)
+		return list;
+
+	}
+
+	postOrder (node, list=[]) {
+		if (node.left) 
+			this.postOrder(node.left, list);
+		if (node.right)
+			this.postOrder(node.right, list);
+		list.push(node.data);
+		
+		return list;
 	}
 
 		
@@ -117,17 +122,12 @@ class Bst {
 
 const t1 = new Bst();
 
+t1.insert(10);
+t1.insert(6);
+t1.insert(15);
+t1.insert(3);
+t1.insert(8);
+t1.insert(20);
 
-console.log(t1.bfs());
-console.log(t1.insert(10));
-console.log(t1.insert(6));
-console.log(t1.insert(15));
-console.log(t1.insert(3));
-console.log(t1.insert(8));
-console.log(t1.insert(20));
 
-//console.log('LookUp : ',t1.lookup(44));
-
-//console.log(t1.bfs());
-
-console.log(t1.postOrder(t1.preOrder()))
+//console.log(t1.postOrder(t1.preOrder()))
