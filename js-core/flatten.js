@@ -1,6 +1,6 @@
 const nestedArray = [1, [2, 3], 4, [5, [6, 7]]];
 
-
+/*
 const flatten = list => {
 	return list.reduce((acc, val)=>{
 		if(typeof val !== "number") {
@@ -8,6 +8,14 @@ const flatten = list => {
 		} else
 			acc.push(val);
 		return acc;
+	},[])
+}
+*/
+
+
+const flatten = list => {
+	return list.reduce((acc, val) => {
+		return acc.concat( Array.isArray(val)? flatten(val) : val)
 	},[])
 }
 
