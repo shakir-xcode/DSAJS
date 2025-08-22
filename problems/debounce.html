@@ -1,0 +1,42 @@
+<html>
+<head>
+<style>
+body {
+height: 500vh;
+}
+
+</style>
+</head>
+<body>
+
+
+</body>
+<script>
+
+function scroller () {
+	console.log(window.scrollY);
+}
+
+
+const debounce = (cb, delay) => {
+	let id = null;
+
+	return () => {
+		if(id) clearTimeout(id);
+		id = setTimeout(cb, delay);
+	}
+} 
+
+window.addEventListener('scroll', debounce(scroller,1000));
+
+</script>
+</html>
+
+
+
+
+
+
+
+
+

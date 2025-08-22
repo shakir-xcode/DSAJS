@@ -1,0 +1,57 @@
+<html>
+<head>
+<style>
+body {
+height: 500vh;
+}
+
+</style>
+</head>
+<body>
+
+
+</body>
+<script>
+
+function scroller () {
+	console.log(window.scrollY);
+}
+
+const throttle1 = (cb, delay) => {
+	let flag = true;
+	return function() {
+		if (flag) {
+			cb();			
+			flag = false;
+			setTimeout(() => {flag=true}, delay);
+		}
+	}
+}
+
+
+const throttle2 = (cb, delay) => {
+	let lastCall = 0;	
+	return () => {
+		const now = Date.now();
+		if((now-lastCall) >= delay) {
+			cb();
+			lastCall = now;
+		}	
+	}
+}
+
+
+
+window.addEventListener('scroll', throttle2(scroller,1000));
+
+</script>
+</html>
+
+
+
+
+
+
+
+
+

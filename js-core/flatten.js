@@ -21,3 +21,19 @@ const flatten = list => {
 
 
 console.log(flatten(nestedArray));
+
+// ------------------------ Another version
+function flattenArray(arr) {
+    const newArr = [];
+
+    // Your implementation
+    arr.forEach(item => {
+        if (item instanceof Array) {
+            newArr.push(...flattenArray(item))
+        } else newArr.push(item);
+    })
+    return [...newArr];
+}
+
+//For the purpose of user debugging.
+flattenArray([1, [2, [3, 4], 5], 6]);
